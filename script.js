@@ -36,14 +36,14 @@ async function getSongs(folder){
     for (const song of songs) {
         songUl.innerHTML=songUl.innerHTML+`<li>
         
-        <img class="invert" src="music.svg" alt="music">
+        <img class="invert" src="images/music.svg" alt="music">
                         <div class="info">                            
                             <div>${song.replaceAll("%20"," ")}</div>
                             <div>Mitansh</div>
                         </div>
                         <div class="playNow">
                             <span>Play Now</span>
-                            <img class="invert" src="playy.svg" alt="play">
+                            <img class="invert" src="images/playy.svg" alt="play">
                         </div>
                         </li>`;
     }
@@ -56,14 +56,16 @@ async function getSongs(folder){
         })
         
     });
+    return songs;
 }
+
 
 const playMusic=(track,pause=false)=>{
     currSong.src=`/${currFolder}/`+track;
     if(!pause)
     {
         currSong.play();
-        play.src="pause.svg";
+        play.src="images/pause.svg";
     }
     document.querySelector(".songinfo").innerHTML=decodeURI(track);
     document.querySelector(".songTime").innerHTML="00:00 / 00:00";
@@ -81,13 +83,12 @@ async function displayAlbums(){
         const e = array[index];
         if(e.href.includes("/songs")){
             let folder=(e.href.split("/").slice(-2)[0]);
-            
 
             let a=await fetch(`http://127.0.0.1:3000/songs/${folder}/info.json`);
             let resp=await a.json();
             console.log(resp);
 
-            document.querySelector(".card-container").innerHTML=document.querySelector(".card-container").innerHTML+` <div data-folder="favv" class="card">
+            document.querySelector(".card-container").innerHTML=document.querySelector(".card-container").innerHTML+` <div data-folder="${folder}" class="card">
             <div class="play">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="2" y="2" width="20" height="20" rx="12" fill="#4CAF50" />
@@ -105,6 +106,7 @@ async function displayAlbums(){
     Array.from(document.getElementsByClassName("card")).forEach(e=>{
         e.addEventListener("click",async item=>{
             songs=await getSongs(`songs/${item.currentTarget.dataset.folder}`)
+            playMusic(songs[0]);
         })
     })
 }
@@ -112,17 +114,16 @@ async function displayAlbums(){
 async function main(){
     await getSongs("songs/favsongs");
     playMusic(songs[0],true);
-   
     displayAlbums();
     play.addEventListener("click",()=>{
         if(currSong.paused)
         {
             currSong.play();
-            play.src="pause.svg";
+            play.src="images/pause.svg";
         }
         else{
             currSong.pause();
-            play.src="playy.svg"
+            play.src="images/playy.svg"
         }
     })
 
@@ -141,7 +142,7 @@ async function main(){
     })
 
     document.querySelector(".close").addEventListener("click",()=>{
-        document.querySelector(".left").style.left="-120"+"%";
+        document.querySelector(".left").style.left="-130"+"%";
     })
 
     previous.addEventListener("click",()=>{
@@ -165,10 +166,10 @@ async function main(){
         currSong.volume=parseInt(e.target.value)/100;
         if(parseInt(e.target.value)==0)
         {
-            document.querySelector(".vol").getElementsByTagName("img")[0].src="mute.svg";
+            document.querySelector(".vol").getElementsByTagName("img")[0].src="images/mute.svg";
         }
         else{
-            document.querySelector(".vol").getElementsByTagName("img")[0].src="volume.svg"
+            document.querySelector(".vol").getElementsByTagName("img")[0].src="images/volume.svg"
         }
     })
     volbtn.addEventListener("click",()=>{
@@ -176,12 +177,12 @@ async function main(){
         {
             currSong.volume=1;
             document.querySelector(".range").getElementsByTagName("input")[0].value=100;
-            document.querySelector(".vol").getElementsByTagName("img")[0].src="volume.svg"
+            document.querySelector(".vol").getElementsByTagName("img")[0].src="images/volume.svg"
         }
         else{
             currSong.volume=0;
             document.querySelector(".range").getElementsByTagName("input")[0].value=0;
-            document.querySelector(".vol").getElementsByTagName("img")[0].src="mute.svg";
+            document.querySelector(".vol").getElementsByTagName("img")[0].src="images/mute.svg";
         }
     })
 
