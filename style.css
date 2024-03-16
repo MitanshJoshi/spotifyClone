@@ -168,9 +168,6 @@ body{
 .playbar{
     position: fixed;
     bottom: 30px;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     background-color: #e2d9d9;
     border-radius: 10px;
     filter: invert(1);
@@ -231,6 +228,7 @@ body{
     background-color: rgb(56, 55, 55);
     border-radius: 10px;
     margin: 12px;
+    bottom: 8px;
     bottom: 0;
     cursor: pointer;
 }
@@ -300,7 +298,7 @@ body{
 @media (max-width:1400px) {
     .left{
         position: absolute;
-        left:-120%;
+        left:-130%;
         transition: all 0.3s;
         z-index: 1;
         width: 370px;
@@ -348,6 +346,7 @@ body{
     .card-container{
         justify-content: center;
         margin: 0px;
+        margin-bottom: 35vh;
     }
     .abovebar{
         flex-direction: column;
@@ -356,8 +355,25 @@ body{
     
 }
 
-@media (max-width:1400px) {
+@media (max-width:1400px){
     .card{
-        width: 80vw;
+        width: 100%;
+    }
+    .heading>*{
+        padding: 2px;
+    }
+    .btns{
+        margin: 0px 6px;
+    }
+    .card-container{
+        max-height: unset;
+        overflow-y: unset;
+        margin-bottom: 30vh;
+    }
+    .heading{
+        padding: 7px;
+    }
+    .spotify-playlist h2{
+        padding: 4px;
     }
 }
